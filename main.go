@@ -13,11 +13,13 @@ import (
 var (
 	ctx = context.Background()
 	rdb = redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
+		Addr:     "https://evolved-midge-10211.upstash.io", // Replace with your Upstash Redis URL
+		Password: "ASfjAAIjcDFlNzcyMThkOWE5MmM0ZDdhOGQ2OTE5ZTIyNmZlZmY4NXAxMA", // If authentication is required
+		DB:       0,                              // Default DB
 	})
 	upgrader = websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool {
-			return true
+			return true // Allow all origins (for development). Secure this for production.
 		},
 	}
 )
@@ -26,7 +28,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/ws/{channel}", handleWebSocket)
 
-	fs := http.FileServer(http.Dir("./web"))
+	fs := http.FileServer(http.Dir("./web")) // Serve frontend files
 	r.PathPrefix("/").Handler(fs)
 
 	log.Println("Server started on :8080")
@@ -39,7 +41,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		log.Println("WebSocket Upgrade Error:", err)
 		return
 	}
 	defer conn.Close()
