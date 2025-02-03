@@ -17,7 +17,7 @@ function startWebSocket() {
     const form = document.getElementById('form');
     const input = document.getElementById('input');
 
-    const ws = new WebSocket('ws://localhost:8080/ws/general');
+    const ws = new WebSocket('ws://https://demo-chat-ebon.vercel.app/');
 
     ws.onmessage = (event) => {
         const message = document.createElement('div');
