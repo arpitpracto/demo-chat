@@ -17,7 +17,7 @@ function startWebSocket() {
     const form = document.getElementById('form');
     const input = document.getElementById('input');
 
-    const ws = new WebSocket('ws://https://demo-chat-ahdf.onrender.com');
+    const ws = new WebSocket('wss://demo-chat-ahdf.onrender.com');
 
     ws.onmessage = (event) => {
         const message = document.createElement('div');
