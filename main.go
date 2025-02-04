@@ -12,11 +12,12 @@ import (
 
 var (
 	ctx = context.Background()
-	rdb = redis.NewClient(&redis.Options{
-		Addr:     "https://evolved-midge-10211.upstash.io", // Replace with your Upstash Redis URL
-		Password: "ASfjAAIjcDFlNzcyMThkOWE5MmM0ZDdhOGQ2OTE5ZTIyNmZlZmY4NXAxMA", // If authentication is required
-		DB:       0,                              // Default DB
-	})
+rdb = redis.NewClient(&redis.Options{
+	Addr:     "rediss://evolved-midge-10211.upstash.io:6379", // Use "rediss://" for secure Redis connection
+	Password: os.Getenv("ASfjAAIjcDFlNzcyMThkOWE5MmM0ZDdhOGQ2OTE5ZTIyNmZlZmY4NXAxMA"), // Load from env for security
+	DB:       0,
+})
+
 	upgrader = websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool {
 			return true // Allow all origins (for development). Secure this for production.
